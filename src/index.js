@@ -1,5 +1,5 @@
 const debug = require('debug')('mongoose-aqp.js');
-const aqp = require('aqp');
+const aqp = require('./aqp');
 
 const defaultConf = {
     blacklist: [],
