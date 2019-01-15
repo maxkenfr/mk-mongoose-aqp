@@ -2,7 +2,7 @@ const debug = require('debug')('mongoose-aqp.js');
 const aqp = require('./aqp');
 
 const defaultConf = {
-    blacklist: [],
+    blacklist: ['page'],
     whitelist: [],
     casters : {},
     castParams : {}
@@ -28,6 +28,7 @@ function aqpPlugin(schema, confG) {
         };
         let extracted = aqp(query, mergedConf);
         let {filter = {}, skip = 0, limit = 20, sort = '', projection = {}} = extracted;
+        if (query.page) skip = limit * (query.page - 1);
         debug('%O', extracted);
         return this.where(filter)
             .limit(limit)
