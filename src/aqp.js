@@ -186,7 +186,7 @@ const getFilter = (filter, params, options) => {
         .filter(
             ({ key }) =>
                 options.blacklist.indexOf(key) === -1 &&
-                (!options.whitelist || options.whitelist.indexOf(key) !== -1)
+                (!Array.isArray(options.whitelist) || options.whitelist.indexOf(key) !== -1)
         )
         .reduce((result, { prefix, key, op, value }) => {
             if (!result[key]) {
