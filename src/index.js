@@ -3,7 +3,6 @@ const aqp = require('./aqp');
 
 const defaultConf = {
     blacklist: ['page'],
-    whitelist: [],
     casters : {},
     castParams : {}
 };
@@ -22,10 +21,10 @@ function aqpPlugin(schema, confG) {
             ...confG,
             ...conf,
             blacklist : [...confG.blacklist, ...conf.blacklist],
-            whitelist : [...confG.whitelist, ...conf.whitelist],
             casters : {...confG.casters, ...conf.casters},
             castParams : {...confG.castParams, ...conf.castParams}
         };
+        if (Array.isArray(conf.whitelist)) mergedConf.whitelist = Array.isArray(confG.whitelist) ?  [...confG.whitelist, ...conf.whitelist] : conf.whitelist;
         let extracted = aqp(query, mergedConf);
         let {filter = {}, skip = 0, limit = 20, sort = '', projection = {}} = extracted;
         if (query.page) skip = limit * (query.page - 1);
