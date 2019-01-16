@@ -1,6 +1,6 @@
 {
   "name": "mk-mongoose-aqp",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "src/index.js",
   "repository": "https://github.com/maxbook/mk-mongoose-aqp.git",
   "author": "maxbryselbout <max@maxken.fr>",

@@ -1,4 +1,4 @@
-const debug = require('debug')('mongoose-aqp.js');
+const debug = require('debug')('mk-mongoose-aqp');
 const aqp = require('./aqp');
 
 const defaultConf = {
