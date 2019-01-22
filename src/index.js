@@ -28,8 +28,10 @@ function aqpPlugin(schema, confG) {
         let extracted = aqp(query, mergedConf);
         let {filter = {}, skip = 0, limit = 20, sort = '', projection = {}} = extracted;
         if (query.page) skip = limit * (query.page - 1);
-        debug('%O', extracted);
-        return this.where(filter)
+        let finallyQuery = {$and:[filter]};
+        debug('Extracted : %O', extracted);
+        debug('Query : %O', finallyQuery);
+        return this.where(finallyQuery)
             .limit(limit)
             .skip(skip)
             .sort(sort)
