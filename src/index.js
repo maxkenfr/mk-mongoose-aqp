@@ -17,7 +17,7 @@ function aqpPlugin(schema, confG) {
         sort : '',
         ...confG
     };
-    let aqpQuery = function (query, conf = {}) {
+    let aqpQuery = async function (query, conf = {}) {
         conf = {
             ...defaultConf,
             ...conf
@@ -55,7 +55,7 @@ function aqpPlugin(schema, confG) {
             .skip(false)
             .sort(false));
     };
-    schema.statics.aqpQueryTotalDEPRACATED = function(query){
+    schema.statics.aqpQueryTotalDEPRECATED = function(query){
         return this.count(query
             .limit(false)
             .skip(false)
