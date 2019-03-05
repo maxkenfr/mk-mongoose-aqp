@@ -29,7 +29,6 @@ function aqpPlugin(schema, confG) {
     let globalConf = mergeConf(defaultConf, confG);
     let aqpQuery = function (query, conf = {}) {
         let mergedConf = mergeConf(globalConf, conf);
-        console.log(mergedConf);
         if (Array.isArray(conf.whitelist)) mergedConf.whitelist = Array.isArray(globalConf.whitelist) ?  _.union(globalConf.whitelist, conf.whitelist) : conf.whitelist;
         let extracted = aqp(query, mergedConf);
         let {filter = {}, skip = mergedConf.skip, limit = mergedConf.limit, sort = mergedConf.sort, projection = {}} = extracted;
