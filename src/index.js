@@ -55,6 +55,12 @@ function aqpPlugin(schema, confG) {
             .skip(false)
             .sort(false));
     };
+    schema.statics.aqpQueryTotalDEPRACATED = function(query){
+        return this.count(query
+            .limit(false)
+            .skip(false)
+            .sort(false));
+    };
     schema.query.aqp = aqpQuery;
     schema.statics.aqp = aqpQuery;
 }
