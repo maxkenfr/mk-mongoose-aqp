@@ -17,7 +17,7 @@ function aqpPlugin(schema, confG) {
         sort : '',
         ...confG
     };
-    let aqpQuery = async function (query, conf = {}) {
+    let aqpQuery = function (query, conf = {}) {
         conf = {
             ...defaultConf,
             ...conf
