@@ -1,36 +1,35 @@
 const debug = require('debug')('mk-mongoose-aqp');
 const aqp = require('./aqp');
 const _ = require('lodash');
+
 const defaultConf = {
     blacklist: ['page'],
+    limit : false,
+    maxLimit : false,
+    skip : 0,
+    sort : '',
     queries : {},
     casters : {},
     castParams : {}
 };
 
+function mergeConf(oldConf, newConf) {
+    let queries = {...oldConf.queries, ...newConf.queries};
+    return {
+        ...oldConf,
+        ...newConf,
+        queries,
+        blacklist : _.union(oldConf.blacklist, newConf.blacklist, Object.keys(queries)),
+        casters : {...oldConf.casters, ...newConf.casters},
+        castParams : {...oldConf.castParams, ...newConf.castParams}
+    }
+}
+
 function aqpPlugin(schema, confG) {
-    confG = {
-        ...defaultConf,
-        limit : false,
-        maxLimit : false,
-        skip : 0,
-        sort : '',
-        ...confG
-    };
+    let globalConf = mergeConf(defaultConf, confG);
     let aqpQuery = function (query, conf = {}) {
-        conf = {
-            ...defaultConf,
-            ...conf
-        };
-        let queries = {...confG.queries, ...conf.queries};
-        let mergedConf = {
-            ...confG,
-            ...conf,
-            queries,
-            blacklist : _.union(confG.blacklist, conf.blacklist, Object.keys(queries)),
-            casters : {...confG.casters, ...conf.casters},
-            castParams : {...confG.castParams, ...conf.castParams}
-        };
+        let mergedConf = mergeConf(globalConf, conf);
+        console.log(mergedConf);
         if (Array.isArray(conf.whitelist)) mergedConf.whitelist = Array.isArray(confG.whitelist) ?  _.union(confG.whitelist, conf.whitelist) : conf.whitelist;
         let extracted = aqp(query, mergedConf);
         let {filter = {}, skip = mergedConf.skip, limit = mergedConf.limit, sort = mergedConf.sort, projection = {}} = extracted;
