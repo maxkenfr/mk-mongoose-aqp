@@ -34,7 +34,7 @@ function aqpPlugin(schema, confG) {
         let {filter = {}, skip = mergedConf.skip, limit = mergedConf.limit, sort = mergedConf.sort, projection = {}} = extracted;
         if (query.page) skip = limit * (query.page - 1);
         _.forIn(mergedConf.queries, function(item, key) {
-            if(query[key]) {
+            if(query[key] !== undefined) {
                 let mongoQuery = typeof item === 'function' ? item(query[key], query) : item;
                 filter = {...filter, ...mongoQuery};
             }
